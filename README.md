@@ -5,4 +5,15 @@ An automated teller machine (ATM) is an electronic banking outlet that allows cu
  A miniproject on implementation of operation of Atm machine which includes:
  Deposit, Withdraw of money and Balance enquiry of an account 
    
-# Features    
+# Features
+Since it is an ATM Machine. Initially we declared some saved accounts . And doing following operations on that account
+1. Deposit 
+ 
+ 
+ 
+ 
+ Withdrawal
+4. Balance Enquiry
+5. Exit
+
+
