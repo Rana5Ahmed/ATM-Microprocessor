@@ -6,7 +6,7 @@ An automated teller machine (ATM) is an electronic banking outlet that allows cu
  Deposit, Withdraw of money and Balance enquiry of an account 
    
 # Features
-Since it is an ATM Machine. Initially we declared some saved accounts . And doing following operations on that account:
+Since it is an ATM Machine. Initially we declared some existing accounts . And doing following operations on that account:
 1. Deposit:
  
    Saved users can deposit in this atm till his account reach 50.000 $ 
