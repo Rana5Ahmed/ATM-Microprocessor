@@ -13,7 +13,7 @@ Since it is an ATM Machine. Initially we declared some saved accounts . And doin
 
 2. Withdrawal:
 
-  Function which allows the user to withdraw money from his account and the user must have enough money in his account.  
+    Function which allows the user to withdraw money from his account and the user must have enough money in his account.  
 
 3. Balance Enquiry:
 
