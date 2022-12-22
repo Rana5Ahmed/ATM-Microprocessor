@@ -17,7 +17,7 @@ Since it is an ATM Machine. Initially we declared some saved accounts . And doin
 
 3. Balance Enquiry:
 
-  Function that calculate and display the current money in User's account which is not reached 50.000 $  
+   Function that calculate and display the current money in User's account which is not reached 50.000 $  
 
 4. Exit:
 
