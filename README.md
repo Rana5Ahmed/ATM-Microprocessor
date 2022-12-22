@@ -13,11 +13,11 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
 2. Withdrawal:
 
-    Function which allows the user to withdraw money from his account and the user must have enough money in his account.  
+    Function which allows the user to withdraw money from his account and the user must have enough money in his account. By default when the withdraw operation is           completed the balance money decrease    
 
 3. Balance Enquiry:
 
-   Function that calculate and display the current money in User's account which is not reached 50.000 $  
+   Function that calculate and display the current money in User's account untill reaching 50.000 $  
 
 4. Exit:
 
