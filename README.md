@@ -21,7 +21,7 @@ Since it is an ATM Machine. Initially we declared some saved accounts . And doin
 
 4. Exit:
 
-  Function that handel the end of program 
+   Function that handel the end of program 
 
 # Modules
 1. Validation
