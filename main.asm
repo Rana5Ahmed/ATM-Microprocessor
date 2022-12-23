@@ -67,7 +67,7 @@
     
     ;------------------------user 3 -----------------------
      user3msg db  0ah,0dh, "Welcome, [TAREK] $"
-     pass3 dw 0000
+     pass3 dw 6789
      user3file db  "tarek.txt",0
      ;balance3 dd  1234
     ;---------------------End user 3 ----------------------   
