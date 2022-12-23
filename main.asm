@@ -476,3 +476,56 @@ exitfunction:
     cmp current_user,3
     je save_user3
     jmp ext
+
+save_user1:
+    mov ax,balancemoney
+    mov bufferbalance,ax
+    mov ah,3ch
+    lea dx,user1file
+    mov cl,2
+    int 21h
+    mov fhandle,ax
+      mov ah,40h
+      mov bx,fhandle
+      lea dx,bufferbalance
+      int 21h
+     ;   
+        ;Close a file
+        mov ah,3eh
+        mov bx,fhandle
+        int 21h
+        jmp ext
+
+save_user2:
+    mov ah,3ch
+    lea dx,user2file
+    mov cl,1
+    int 21h
+    mov fhandle,ax
+      mov ah,40h
+      mov bx,fhandle
+      lea dx,balancemoney
+      int 21h
+     ;   
+        ;Close a file
+        mov ah,3eh
+        mov bx,fhandle
+        int 21h
+        jmp ext
+
+save_user3:
+    mov ah,3ch
+    lea dx,user3file
+    mov cl,1
+    int 21h
+    mov fhandle,ax
+      mov ah,40h
+      mov bx,fhandle
+      lea dx,balancemoney
+      int 21h
+     ;   
+        ;Close a file
+        mov ah,3eh
+        mov bx,fhandle
+        int 21h
+        jmp ext
