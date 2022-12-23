@@ -506,12 +506,12 @@ save_user2:
       mov bx,fhandle
       lea dx,balancemoney
       int 21h
-     ;   
-        ;Close a file
-        mov ah,3eh
-        mov bx,fhandle
-        int 21h
-        jmp ext
+        
+     ;Close a file
+     mov ah,3eh
+     mov bx,fhandle
+     int 21h
+     jmp ext
 
 save_user3:
     mov ah,3ch
@@ -522,10 +522,25 @@ save_user3:
       mov ah,40h
       mov bx,fhandle
       lea dx,balancemoney
-      int 21h
-     ;   
-        ;Close a file
-        mov ah,3eh
-        mov bx,fhandle
-        int 21h
-        jmp ext
+      int 21h   
+     ;Close a file
+     mov ah,3eh
+     mov bx,fhandle
+     int 21h
+     jmp ext
+ ext:       
+    mov ax,03h
+    int 10h 
+    mov ah,09h
+    mov dx,offset goodbye    ; memory location of message "Goodbye"
+    int 21h     ; dos interrupt 21h 
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h     ; dos interrupt 21h
+    mov ah,4ch      ; dos function 4ch to terminate and return to dos
+    mov al,00       
+    int 21h         ; dos interrupt 21h 
+
+;--------------------------End main processes of the bank-------------------------------------------    
+
+endp    
+end main
