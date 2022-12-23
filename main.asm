@@ -87,14 +87,10 @@ main proc
     int 21h     ; dos interrupt 21h
 
 ; --------------------------Scan username and password-------------------------------------
-
-start: 
-
     
-
 password:    
-        ;Password Cheek Level
-    mov cx,pass1
+        ;Password Check Level
+    mov pass,0
     mov bx,offset pass
     
     mov ah,9
@@ -158,9 +154,6 @@ log_user1:
     mov current_user,1
     mov ax,bufferbalance
     mov balancemoney,ax
-    mov ah,09h  ; dos function 09h to print a string
-    mov dx,offset user1msg    ; memory location of message "Welcome To the incredibles bank"
-    int 21h     ; dos interrupt 21h
     jmp below_main_bank
 log_user2:
     mov ah,3dh
@@ -182,9 +175,7 @@ log_user2:
     mov current_user,2
     mov ax,bufferbalance
     mov balancemoney,ax
-    mov ah,09h  ; dos function 09h to print a string
-    mov dx,offset user2msg    ; memory location of message "Welcome To the incredibles bank"
-    int 21h     ; dos interrupt 21h
+
     jmp below_main_bank
 log_user3:
     mov ah,3dh
@@ -206,9 +197,6 @@ log_user3:
     mov current_user,3
     mov ax,bufferbalance
     mov balancemoney,ax
-    mov ah,09h  ; dos function 09h to print a string
-    mov dx,offset user3msg    ; memory location of message "Welcome To the incredibles bank"
-    int 21h     ; dos interrupt 21h
     jmp below_main_bank        
     
          
@@ -221,9 +209,10 @@ log_user3:
     lea dx,wrong_username_pwmsg
     int 21h
     mov pass,0
-    jmp start
-    
-; --------------------------End scan username and password----------------------------------
+    jmp password
+   
+
+; --------------------------End scan username and password------------------------------------- 
 
 ;--------------------------Main processes of the bank-------------------------------------------    
 below_main_bank:
