@@ -494,6 +494,86 @@ exitfunction:
     cmp current_user,3
     je save_user3
     jmp ext
+inquire:
+    mov ax,03h
+    int 10h
+    
+    mov ah,09h
+    lea dx,sdashedline
+    int 21h
+    lea dx,newline
+    int 21h
+    lea dx,currentbalancemsg
+    int 21h
+    ;PRINT PROC 
+    mov ax,balancemoney		
+	
+	;initialize count
+	mov cx,0
+	mov dx,0
+	label1:
+		; if ax is zero
+		cmp ax,0
+		je print1	
+		
+		;initialize bx to 10
+		mov bx,10	
+		
+		; extract the last digit
+		div bx				
+		
+		;push it in the stack
+		push dx			
+		
+		;increment the count
+		inc cx			
+		
+		;set dx to 0
+		xor dx,dx
+		jmp label1
+	print1:
+		;check if count
+		;is greater than zero
+		cmp cx,0
+		je endinquire
+		
+		;pop the top of stack
+		pop dx
+		
+		;add 48 so that it
+		;represents the ASCII
+		;value of digits
+		add dx,48
+		
+		;interrupt to print a
+		;character
+		mov ah,02h
+		int 21h
+		
+		;decrease the count
+		dec cx
+		jmp print1
+endinquire:		
+	mov ah,09h
+    lea dx,sdashedline
+    int 21h
+    lea dx,newline
+    int 21h
+    lea dx,newline
+    int 21h
+    jmp main_bank 
+;------------------------------------------------------------
+ logout:
+    cmp current_user,1
+    je save_user1
+    cmp current_user,2
+    je save_user2
+    cmp current_user,3
+    je save_user3
+cont_logout:
+    mov ax,03h
+    int 10h    
+    jmp main
 
 save_user1:
     mov ax,balancemoney
