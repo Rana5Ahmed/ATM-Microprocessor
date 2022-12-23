@@ -88,6 +88,141 @@ main proc
 
 ; --------------------------Scan username and password-------------------------------------
 
+start: 
+
+    
+
+password:    
+        ;Password Cheek Level
+    mov cx,pass1
+    mov bx,offset pass
+    
+    mov ah,9
+    lea dx,msgpw1
+    int 21h
+    
+    cheekpass:
+    cmp pass,9999
+    jg worng
+    mov ah,8
+    int 21h
+    
+    cmp al,13 
+    je testpw
+    
+    mov bl,al
+    sub bl,30h
+    mov ax,pass
+    mul numberplace
+    mov bh,00h
+    add ax,bx
+    mov pass,ax
+    mov ah,2
+    mov dl,42
+    int 21h
+    
+    jmp cheekpass
+testpw:    
+    mov ax,3h
+    int 10h
+    mov ax,pass
+    cmp ax,pass1
+    je log_user1
+    
+    cmp ax,pass2
+    je log_user2
+    
+    cmp ax,pass3
+    je log_user3
+    
+    jmp worng
+
+log_user1:
+
+    mov ah,3dh
+    lea dx,user1file
+    mov al,0
+    int 21h
+    mov fhandle,ax
+    mov ah ,3fh
+    lea dx,bufferbalance
+    mov cx,100
+    mov bx,  fhandle
+    int 21h
+    lea dx,bufferbalance
+    mov ah,09h
+    int 21h
+    mov ah,3eh
+    mov bx,fhandle
+    int 21h
+    mov current_user,1
+    mov ax,bufferbalance
+    mov balancemoney,ax
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user1msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    jmp below_main_bank
+log_user2:
+    mov ah,3dh
+    lea dx,user2file
+    mov al,0
+    int 21h
+    mov fhandle,ax
+    mov ah ,3fh
+    lea dx,bufferbalance
+    mov cx,100
+    mov bx,  fhandle
+    int 21h
+    lea dx,bufferbalance
+    mov ah,09h
+    int 21h
+    mov ah,3eh
+    mov bx,fhandle
+    int 21h
+    mov current_user,2
+    mov ax,bufferbalance
+    mov balancemoney,ax
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user2msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    jmp below_main_bank
+log_user3:
+    mov ah,3dh
+    lea dx,user3file
+    mov al,0
+    int 21h
+    mov fhandle,ax
+    mov ah ,3fh
+    lea dx,bufferbalance
+    mov cx,100
+    mov bx,  fhandle
+    int 21h
+    lea dx,bufferbalance
+    mov ah,09h
+    int 21h
+    mov ah,3eh
+    mov bx,fhandle
+    int 21h
+    mov current_user,3
+    mov ax,bufferbalance
+    mov balancemoney,ax
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user3msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    jmp below_main_bank        
+    
+         
+    
+    ;Worng Password Level
+    worng:
+    mov ax,3h
+    int 10h
+    mov ah,9
+    lea dx,wrong_username_pwmsg
+    int 21h
+    mov pass,0
+    jmp start
+    
 ; --------------------------End scan username and password----------------------------------
 
 ;--------------------------Main processes of the bank-------------------------------------------    
