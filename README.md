@@ -30,6 +30,7 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
 The Bank has 3 presaved accounts , the first user has 12345 in his bank account, the second user has 5000 in her account and the final pre-saved account has 4500 in his balance money. 
  ### Scan
+ In this function we take the money which the user enter, and make sure it's a valid number to enter and under 50000$ as the maximumm balance in account is fifty thousand.  
  
  ### Deposit
  In this function we will face 3 Cases:
@@ -54,3 +55,7 @@ The Bank has 3 presaved accounts , the first user has 12345 in his bank account,
 
 
  ### Balance Money
+This function mainly focus on displaying the balance that the user has, it will show the current balance even if deposite or withdraw is applied, even if the program is closed and opened again the last changes to the balance money will be saved.
+
+### Exit and Log out
+Log out function let the user end the program and give space to other users to use the atm now, on the other hand the exit function let the user to end the program completely and close the program interface.
