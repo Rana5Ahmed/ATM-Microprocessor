@@ -32,6 +32,7 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
    2. Deposit money over the required money in card (Deposit over 50.000$)
    3. Deposit money within the limit of required money in card(money<50.000$)
  Then we have to check the balance money       
+ 
    ![WhatsApp Image 2022-12-23 at 7 10 05 PM](https://user-images.githubusercontent.com/82416493/209380660-4530adf2-b506-4254-9cf1-38660e85ff28.jpeg)
    
  ### Withdrawal
