@@ -19,9 +19,11 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
    Function that calculate and display the current money in User's account untill reaching 50.000 $  
 
-4. Exit:
+4. Logout:
 
-   Function that handel the end of program 
+   Function that logs out of a user account so we may login to another user
+5. Exit:
+   Function that handles the safe exit of the program
 
 # Programflow
 
