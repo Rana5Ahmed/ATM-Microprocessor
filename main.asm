@@ -468,3 +468,11 @@ failedwithdraw:
     mov dx,offset newline    ; memory location of message "new line"     
     int 21h
     jmp main_bank
+exitfunction:
+    cmp current_user,1
+    je save_user1
+    cmp current_user,2
+    je save_user2
+    cmp current_user,3
+    je save_user3
+    jmp ext
