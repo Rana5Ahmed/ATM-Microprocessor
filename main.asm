@@ -576,57 +576,98 @@ cont_logout:
     jmp main
 
 save_user1:
-    mov ax,balancemoney
-    mov bufferbalance,ax
-    mov ah,3ch
-    lea dx,user1file
-    mov cl,2
-    int 21h
-    mov fhandle,ax
-      mov ah,40h
-      mov bx,fhandle
-      lea dx,bufferbalance
-      int 21h
-     ;   
+    ;create a new file 
+        mov ah,3ch
+        lea dx,user1file 
+        mov cl,0
+        int 21h
+        mov fhandle,ax
+    
+    ;open file
+        mov ah,3dh
+        lea dx,user1file
+        mov al,2
+        int 21h
+        mov fhandle,ax
+    
+    ;write to file
+        mov cx,3 
+        mov ah,40h
+        mov bx,fhandle
+        lea dx,balancemoney
+        int 21h
+        
         ;Close a file
         mov ah,3eh
         mov bx,fhandle
         int 21h
+        cmp number,4
+        je  cont_logout
         jmp ext
 
 save_user2:
-    mov ah,3ch
-    lea dx,user2file
-    mov cl,1
-    int 21h
-    mov fhandle,ax
-      mov ah,40h
-      mov bx,fhandle
-      lea dx,balancemoney
-      int 21h
+    ;create a new file 
+        mov ah,3ch
+        lea dx,user2file 
+        mov cl,0
+        int 21h
+        mov fhandle,ax
+    
+    ;open file
+        mov ah,3dh
+        lea dx,user2file
+        mov al,2
+        int 21h
+        mov fhandle,ax
+    
+    ;write to file
+        mov cx,3 
+        mov ah,40h
+        mov bx,fhandle
+        lea dx,balancemoney
+        int 21h
         
-     ;Close a file
-     mov ah,3eh
-     mov bx,fhandle
-     int 21h
-     jmp ext
+        ;Close a file
+        mov ah,3eh
+        mov bx,fhandle
+        int 21h
+        cmp number,4
+        je  cont_logout
+        jmp ext
 
 save_user3:
-    mov ah,3ch
-    lea dx,user3file
-    mov cl,1
-    int 21h
-    mov fhandle,ax
-      mov ah,40h
-      mov bx,fhandle
-      lea dx,balancemoney
-      int 21h   
-     ;Close a file
-     mov ah,3eh
-     mov bx,fhandle
-     int 21h
-     jmp ext
- ext:       
+    ;create a new file 
+        mov ah,3ch
+        lea dx,user3file 
+        mov cl,0
+        int 21h
+        mov fhandle,ax
+    
+    ;open file
+        mov ah,3dh
+        lea dx,user3file
+        mov al,2
+        int 21h
+        mov fhandle,ax
+    
+    ;write to file
+        mov cx,3 
+        mov ah,40h
+        mov bx,fhandle
+        lea dx,balancemoney
+        int 21h
+        
+        ;Close a file
+        mov ah,3eh
+        mov bx,fhandle
+        int 21h
+        cmp number,4
+        je  cont_logout
+        jmp ext
+    
+    
+    ;----- 
+ext:       
     mov ax,03h
     int 10h 
     mov ah,09h
