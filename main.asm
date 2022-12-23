@@ -215,9 +215,41 @@ log_user3:
 ; --------------------------End scan username and password------------------------------------- 
 
 ;--------------------------Main processes of the bank-------------------------------------------    
-below_main_bank:
+above_main_bank:
     mov ax,3h
     int 10h
+    cmp current_user,1
+    je u1
+    cmp current_user,2
+    je u2
+    cmp current_user,3
+    je u3
+
+
+u1:
+
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user1msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    jmp main_bank
+u2:
+
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user2msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h 
+    jmp main_bank
+u3:
+
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset user3msg    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    jmp main_bank
+            
+    
+
+;--------------------------Main processes of the bank-------------------------------------------    
+
+    
 main_bank:
     
     mov ah,09h  ; dos function 09h to print a string
@@ -236,12 +268,16 @@ main_bank:
     mov dx,offset withdrawmessage    ; memory location of message "2.Withdraw"
     int 21h     ; dos interrupt 21h
     
-    ;mov dx,offset balancemessage    ; memory location of message "3.Balance Inquiry"
-    ;int 21h     ; dos interrupt 21h
+    mov dx,offset balancemessage    ; memory location of message "3.Balance Inquiry"logoutmsg
+    int 21h     ; dos interrupt 21h
+    
+    mov dx,offset logoutmsg    ; memory location of message "4.Log out"
+    int 21h     ; dos interrupt 21h
     
                                                              
     mov dx,offset extmessage    ; memory location of message "5.Exit"
     int 21h     ; dos interrupt 21h
+    
     mov dx,offset dashedline    ; memory location of message "----------------------------------"
     int 21h     ; dos interrupt 21h
 
@@ -258,8 +294,8 @@ loop_read_number:
                 ; result (character entered) is stored in al
     int 21h     ; dos interrupt 21h
     
-    ;cmp al,0dh  ; check if enter key is pressed
-    ;je numbercomplete   ; jump to numbercompletd if enter key is pressed
+    cmp al,0dh  ; check if enter key is pressed
+    je numbercomplete   ; jump to numbercompletd if enter key is pressed
     
     cmp al,31h  ; check if input character is less then 1, 
                 ; here we are validating user input to check if entered character is betwen 1 and 5 both included
@@ -271,15 +307,7 @@ loop_read_number:
     
     sub al,30h  ; subtract 30h character code of character 0 from input to get numeric value
                 ; as input is ascii and to convert from ascii to numeric you subtract ascii - 30h 
-    mov ah,00                            
-    mov bx,ax   ; temporarily store value of read character in bx 
-    
-    mov ax,number   ; copy number to ax
-    mul numberplace ; we multipley number with 10. 
-                    ; first time the number is 0 so multiplication with 10 it will remain same
-    
-    add ax,bx       ; add the newly entered number to number variable
-    mov number,ax
+    mov number,al
     
     cmp al,1
     je entermoney
@@ -288,9 +316,12 @@ loop_read_number:
     je entermoney
     
     cmp al,3
+    je inquire
+    cmp al,4
+    je logout
+    cmp al,5
     je exitfunction
-    
-    cmp al,3
+    cmp al,5
     jg invalidcharacter
     
     
@@ -308,13 +339,11 @@ numbercomplete:
     ; When the user press enter the control will transfer to this location
     ; decimal value of input numeric charaters  is stored in variable number 
     
-    mov ax,number ; this line can be removed. I am addint this only so that 
-                  ; you can check the value of number in ax register in emu8086
-
-
+    mov ax,03h
+    int 10h
     ; Here you can write code to display the number 
     ; or use entered number as an input for other program 
-    jmp main_bank
+    jmp above_main_bank
 entermoney:
     
     mov money, 0 ;money is the variable that we scan deposit / withraw in 
