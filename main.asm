@@ -134,54 +134,29 @@ testpw:
     jmp worng
 
 log_user1:
-
     mov ah,3dh
     lea dx,user1file
     mov al,0
     int 21h
-    mov fhandle,ax
-    mov ah ,3fh
-    lea dx,bufferbalance
-    mov cx,100
-    mov bx,  fhandle
-    int 21h
-    lea dx,bufferbalance
-    mov ah,09h
-    int 21h
-    mov ah,3eh
-    mov bx,fhandle
-    int 21h
     mov current_user,1
-    mov ax,bufferbalance
-    mov balancemoney,ax
-    jmp below_main_bank
+    jmp log_users
 log_user2:
     mov ah,3dh
     lea dx,user2file
     mov al,0
     int 21h
-    mov fhandle,ax
-    mov ah ,3fh
-    lea dx,bufferbalance
-    mov cx,100
-    mov bx,  fhandle
-    int 21h
-    lea dx,bufferbalance
-    mov ah,09h
-    int 21h
-    mov ah,3eh
-    mov bx,fhandle
-    int 21h
     mov current_user,2
-    mov ax,bufferbalance
-    mov balancemoney,ax
-
-    jmp below_main_bank
+    jmp log_users
 log_user3:
     mov ah,3dh
     lea dx,user3file
     mov al,0
     int 21h
+    mov current_user,3
+    jmp log_users
+        
+log_users:
+    
     mov fhandle,ax
     mov ah ,3fh
     lea dx,bufferbalance
@@ -194,11 +169,11 @@ log_user3:
     mov ah,3eh
     mov bx,fhandle
     int 21h
-    mov current_user,3
+    
     mov ax,bufferbalance
     mov balancemoney,ax
-    jmp below_main_bank        
     
+    jmp above_main_bank   
          
     
     ;Worng Password Level
