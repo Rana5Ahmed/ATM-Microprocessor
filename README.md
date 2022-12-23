@@ -25,8 +25,8 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
    Function that handel the end of program 
 
-# Modules
-1. Validation
-2. Deposit
-3. Withdrawal
-4. Balance Money
+# Programflow
+ ### Scan
+ ### Deposit
+ ### Withdrawal
+ ### Balance Money
