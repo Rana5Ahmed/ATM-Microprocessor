@@ -1,3 +1,196 @@
+ .model ATM
+.stack 100h
+
+.data
+    numberplace dw 10
+    number dw 0
+    money dd 0
+    maxmoney dd 50000
+    balancemoney dd 0
+    counter db 0
+    ;----------------------------------------------Messages----------------------------------------------------
+    invalidoption db 0ah,0dh,"Invalid Option$"
+    inputnumber db 0ah,0dh,"Please select an option (1 to 3): $"
+    incbankmessage db 0ah,0dh,"Welcome To the incredibles bank $"
+    incbankdescription db 0ah,0dh,"The incredibles bank is bank for student which you can deposit to 50,000$"
+    depositmessage db 0ah,0dh,"1.Deposit $"
+    withdrawmessage db 0ah,0dh,"2.Withdraw $"
+    extmessage db 0ah,0dh,"3.Exit $"
+    temp db 0ah,0dh,"Function done $"
+    newline db 0ah,0dh,"$"
+    goodbye db 0ah,0dh,"It was our pleasure to serve you $"
+    entermoneymessage db 0ah,0dh,"Enter amount of money : $"
+    dashedline db 0ah,0dh,"--------------------------------------------$"
+    donthavemoney db 0ah,0dh,"Sorry you do not have enough money $"
+    zeromoney db 0ah,0dh,"You did not enter any money Yet!! $"
+    reached_50k db 0ah,0dh,"Congratulations, You have reached your first 50k, now you can open a new Bank account $"
+    morethan_50k db 0ah,0dh,"Sorry you can not Deposit/Withdraw more than 50k in your account $" 
+    msgpw1 db 0ah,0dh,'Please Enter Your ID: $'
+    msgpw2 db 0ah,0dh,'Confirm ID: $'
+    mgspw3 db 0ah,0dh,'invalid ID $'
+    wrong_username_pwmsg db 0ah,0dh,"Sorry, Wrong ID $"
+    ;----------------------------------------------End Messages-----------------------------------------------------
+    buffer db 100 dup<'$'>
+    bufferpw db 100 dup<'$'>
+    bufferbalance dd 100 dup<'$'>
+    err db 'Error $'
+    num1 db 100 dup<'$'>
+    tempvar db 0
+    num2 dw 0
+    ten db 10
+    reversedbalance dd 0
+    tempmoney dd 0
+    fhandle dw ?
+    pass dw 0
+    ;-------------------------------------------------------------------------------
+
+    ;-------------------------------------------------------------------------------
+    ;------------------------user 1 ----------------------- 
+     user1msg db  "Welcome, [EZZAT] $"
+     pass1 dw 1234
+     user1file db  "ezzat.txt",0
+     fhandle1 dw ?
+     ;balance1 dd  250
+    ;---------------------End user 1 ----------------------
+    
+    
+    ;------------------------user 2 ----------------------- 
+     user2msg db  "Welcome, [RANEEM] $"
+     pass2 dw 5555
+     user2file db  "raneem.txt",0
+     fhandle2 dw ? 
+     ;balance2 dd  13 
+     ;---------------------End user 2 ----------------------
+    
+    
+    ;------------------------user 3 -----------------------
+     user3msg db  "Welcome, [TAREK] $"
+     pass3 dw 0000
+     user3file db  "tarek.txt",0
+     fhandle3 dw ?
+     ;balance3 dd  1234
+    ;---------------------End user 3 ----------------------   
+    current_user db 0
+    
+.code
+main proc
+    
+     mov ax,@data
+     mov ds,ax
+        
+                  
+
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset incbankmessage    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    mov dx,offset incbankdescription    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+
+; --------------------------Scan username and password-------------------------------------
+
+; --------------------------End scan username and password----------------------------------
+start:
+;--------------------------Main processes of the bank-------------------------------------------    
+below_main_bank:
+    mov ax,3h
+    int 10h
+main_bank:
+    
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset incbankmessage    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    mov dx,offset incbankdescription    ; memory location of message "Welcome To the incredibles bank"
+    int 21h     ; dos interrupt 21h
+    
+    
+    mov dx,offset dashedline    ; memory location of message "----------------------------------"
+    int 21h     ; dos interrupt 21h    
+    mov ah,09h  ; dos function 09h to print a string 
+    mov dx,offset depositmessage    ; memory location of message "1.Deposit"     
+    int 21h     ; dos interrupt 21h         
+    
+    mov dx,offset withdrawmessage    ; memory location of message "2.Withdraw"
+    int 21h     ; dos interrupt 21h
+    
+    ;mov dx,offset balancemessage    ; memory location of message "3.Balance Inquiry"
+    ;int 21h     ; dos interrupt 21h
+    
+                                                             
+    mov dx,offset extmessage    ; memory location of message "5.Exit"
+    int 21h     ; dos interrupt 21h
+    mov dx,offset dashedline    ; memory location of message "----------------------------------"
+    int 21h     ; dos interrupt 21h
+
+
+loop_number_main:
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset inputnumber    ; memory location of message "Please select an option (1 to 5): "
+    int 21h     ; dos interrupt 21h
+    
+    mov number,0    ; set initial value of number to 0
+loop_read_number:
+
+    mov ah,1  ; dos function to read a character with echo from keyboard
+                ; result (character entered) is stored in al
+    int 21h     ; dos interrupt 21h
+    
+    ;cmp al,0dh  ; check if enter key is pressed
+    ;je numbercomplete   ; jump to numbercompletd if enter key is pressed
+    
+    cmp al,31h  ; check if input character is less then 1, 
+                ; here we are validating user input to check if entered character is betwen 1 and 5 both included
+    jl invalidcharacter ; jump to display invalid character
+ 
+    cmp al,34h  ; check if input character is great then 5
+    jg invalidcharacter ; jump to display invalid option
+    
+    
+    sub al,30h  ; subtract 30h character code of character 0 from input to get numeric value
+                ; as input is ascii and to convert from ascii to numeric you subtract ascii - 30h 
+    mov ah,00                            
+    mov bx,ax   ; temporarily store value of read character in bx 
+    
+    mov ax,number   ; copy number to ax
+    mul numberplace ; we multipley number with 10. 
+                    ; first time the number is 0 so multiplication with 10 it will remain same
+    
+    add ax,bx       ; add the newly entered number to number variable
+    mov number,ax
+    
+    cmp al,1
+    je entermoney
+    
+    cmp al,2
+    je entermoney
+    
+    cmp al,3
+    je exitfunction
+    
+    cmp al,3
+    jg invalidcharacter
+    
+    
+    
+invalidcharacter:
+    mov ax,3h
+    int 10h
+    mov ah,09h  ; dos function 09h to print a string
+    mov dx,offset invalidoption   ; memoery location of message "Invalid Option"
+    int 21h     ; dos interrupt 21h
+    
+    jmp main_bank           
+        
+numbercomplete:
+    ; When the user press enter the control will transfer to this location
+    ; decimal value of input numeric charaters  is stored in variable number 
+    
+    mov ax,number ; this line can be removed. I am addint this only so that 
+                  ; you can check the value of number in ax register in emu8086
+
+
+    ; Here you can write code to display the number 
+    ; or use entered number as an input for other program 
+    jmp main_bank
 entermoney:
     
     mov money, 0 ;money is the variable that we scan deposit / withraw in 
