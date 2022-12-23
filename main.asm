@@ -442,3 +442,29 @@ fullmoneydeposit:
     je fullmoney
     cmp balancemoney,0
     jne morefullmoney
+withdrawfunction:
+    mov ax,money
+    cmp balancemoney,ax
+    jb failedwithdraw
+    sub balancemoney,ax
+    mov ax,3h
+    int 10h 
+    mov ah,09h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    mov dx,offset temp    ; memory location of message "Function done"     
+    int 21h     ; dos interrupt 21h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    jmp main_bank
+failedwithdraw:
+    mov ax,3h
+    int 10h
+    mov ah,09h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    mov dx,offset donthavemoney    ; memory location of message "You dont' have money"     
+    int 21h     ; dos interrupt 21h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    jmp main_bank
