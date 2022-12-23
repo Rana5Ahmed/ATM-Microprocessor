@@ -24,6 +24,8 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
    Function that handel the end of program 
 
 # Programflow
+
+The Bank has 3 presaved accounts , the first user has 12345 in his bank account, the second user has 5000 in her account and the final pre-saved account has 4500 in his balance money. 
  ### Scan
  
  ### Deposit
