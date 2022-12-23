@@ -13,7 +13,9 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
 2. Withdrawal:
 
-    Function which allows the user to withdraw money from his account and the user must have enough money in his account. By default when the withdraw operation is           completed the balance money decrease    
+    Function which allows the user to withdraw money from his account and the user must have enough money in his account. By default when the withdraw operation is           completed the balance money decrease, if there is no enough money to withdraw, the atm will jump to failed withdraw function which is telling the user there is no enough money and this operation can't be completed 
+    ![mp](https://user-images.githubusercontent.com/66146343/209373876-f3a30821-2fb8-48f5-a3ea-cef5aca606c3.png)
+
 
 3. Balance Money:
 
