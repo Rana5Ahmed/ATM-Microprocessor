@@ -25,14 +25,21 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
 # Programflow
  ### Scan
+ 
  ### Deposit
-   
+ In this function we will face 3 Cases:
+   1. Deposit all money in account at once time (Deposit 50.000$ in one operation)
+   2. Deposit money over the required money in card (Deposit over 50.000$)
+   3. Deposit money within the limit of required money in card(money<50.000$)
+ Then we have to check the balance money       
+   ![WhatsApp Image 2022-12-23 at 7 10 05 PM](https://user-images.githubusercontent.com/82416493/209380660-4530adf2-b506-4254-9cf1-38660e85ff28.jpeg)
    
  ### Withdrawal
    Withdrawl function allows the user to take his own money from his account, the amount of withdraw must be less than the balance money and can't be greater than
      it, if there is no enough money to withdraw, the atm will jump to failed withdraw function which is telling the user there is no enough money and this operation
      can't be completed
  
- 
+ ![WhatsApp Image 2022-12-23 at 7 24 56 PM](https://user-images.githubusercontent.com/82416493/209377541-2e999664-7e2d-4823-ac96-15536a46939c.jpeg)
+
 
  ### Balance Money
