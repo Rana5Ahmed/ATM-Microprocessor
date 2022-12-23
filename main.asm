@@ -65,7 +65,7 @@
     
     ;------------------------user 3 -----------------------
      user3msg db  "Welcome, [TAREK] $"
-     pass3 dw 0000
+     pass3 dw 6789
      user3file db  "tarek.txt",0
      fhandle3 dw ?
      ;balance3 dd  1234
@@ -89,7 +89,7 @@ main proc
 ; --------------------------Scan username and password-------------------------------------
 
 ; --------------------------End scan username and password----------------------------------
-start:
+
 ;--------------------------Main processes of the bank-------------------------------------------    
 below_main_bank:
     mov ax,3h
