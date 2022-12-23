@@ -377,7 +377,7 @@ numberdone:
 
     cmp number ,1  ; if the input option was 1 or 2 it'll go to depoist or withdraw
     je depositfunction
-    
+   
     cmp number ,2 
     je withdrawfunction
     jmp main_bank
@@ -393,3 +393,52 @@ emptynumber:
     mov dx,offset newline    ; memory location of message "new line"
     int 21h
     jmp entermoney
+    
+depositfunction:
+    cmp ax,maxmoney
+    je  fullmoneydeposit
+    cmp ax,maxmoney
+    jnb morefullmoney
+    mov bx,balancemoney
+    add bx,money
+    cmp bx,maxmoney                     
+    je fullmoney
+    cmp bx,maxmoney
+    jnb morefullmoney
+    cmp bx, balancemoney
+    jb  morefullmoney 
+    mov balancemoney,bx
+    mov ax,3h
+    int 10h
+    mov ah,09h
+    mov dx,offset newline    ; memory location of message "new line"
+    int 21h
+    mov dx,offset temp    ; memory location of message "Function done"
+    int 21h
+    mov dx,offset newline    ; memory location of message "new line"
+    int 21h
+    jmp main_bank
+fullmoney:
+    mov balancemoney,50000
+    mov ah,09h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    mov dx,offset reached_50k    ; memory location of message "reached_50k"     
+    int 21h     ; dos interrupt 21h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    jmp main_bank
+morefullmoney:
+    mov ah,09h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    mov dx,offset morethan_50k    ; memory location of message "Function done"     
+    int 21h     ; dos interrupt 21h
+    mov dx,offset newline    ; memory location of message "new line"     
+    int 21h
+    jmp main_bank
+fullmoneydeposit: 
+    cmp balancemoney,0
+    je fullmoney
+    cmp balancemoney,0
+    jne morefullmoney
