@@ -301,7 +301,7 @@ loop_read_number:
                 ; here we are validating user input to check if entered character is betwen 1 and 5 both included
     jl invalidcharacter ; jump to display invalid character
  
-    cmp al,34h  ; check if input character is great then 5
+    cmp al,35h  ; check if input character is great then 5
     jg invalidcharacter ; jump to display invalid option
     
     
