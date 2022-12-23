@@ -15,7 +15,7 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
     Function which allows the user to withdraw money from his account and the user must have enough money in his account. By default when the withdraw operation is           completed the balance money decrease    
 
-3. Balance Enquiry:
+3. Balance Money:
 
    Function that calculate and display the current money in User's account untill reaching 50.000 $  
 
@@ -27,4 +27,4 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 1. Validation
 2. Deposit
 3. Withdrawal
-4. Balance Enquiry
+4. Balance Money
