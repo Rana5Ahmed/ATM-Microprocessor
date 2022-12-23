@@ -1,100 +1,67 @@
-.model ATM
-.stack 100h
-;org 100h
-.data
-    numberplace dw 10
-    number dw 0
-    money dd 0
-    maxmoney dd 50000
-    balancemoney dd 0
-    invalidoption db 0ah,0dh,"Invalid Option$"
-    inputnumber db 0ah,0dh,"Please select an option (1 to 5): $"
-    incbankmessage db 0ah,0dh,"Welcome To the incredibles bank $"
-    incbankdescription db 0ah,0dh,"The incredibles bank is bank for student which you can deposit to 50,000$"
-    depositmessage db 0ah,0dh,"1.Deposit $"
-    withdrawmessage db 0ah,0dh,"2.Withdraw $"
-    balancemessage db 0ah,0dh,"3.Balance Inquiry $"
-    extmessage db 0ah,0dh,"4.Exit $"
-    temp db 0ah,0dh,"Function done $"
-    newline db 0ah,0dh,"$"
-    goodbye db 0ah,0dh,"It was our pleasure to serve you $"
-    entermoneymessage db 0ah,0dh,"Enter amount of money : $"
-    dashedline db 0ah,0dh,"--------------------------------------------$"
-    donthavemoney db 0ah,0dh,"Sorry you don't have enough money $"
-    zeromoney db 0ah,0dh,"You didn't enter any money Yet!! $"
-    reached_50k db 0ah,0dh,"Congratulations, You have reached your first 50k, now you can open Bank an account $"
-    morethan_50k db 0ah,0dh,"Sorry you can not have more than 50k in your account $"
-    ;-------------------------------------------------------------------------------
-    fname db 'first2.txt',0
-    fhandle dw ?
-    msgun db 0ah,0dh, 'Enter Username: $'
-    msgpw1 db 0ah,0dh,'Enter Password: $'
-    msgpw2 db 0ah,0dh,'Confirm Password: $'
-    mgspw3 db 0ah,0dh,'Password invalid $'
-    msgpw4 db 0ah,0dh,"Password Doesn't match $"
-    buffer db 100 dup<'$'>
-    bufferpw db 100 dup<'$'>
-    bufferbalance db 100 dup<'$'>
-    err db 'Error $'
-    num1 dw 0
-    num2 dw 0
-    ten db 10
-    reversedbalance dd 0
-    tempmoney dd 0
-    ;-------------------------------------------------------------------------------
-    createaccountmsg db 0ah,0dh,"1-Create account $"
-    loginmsg db 0ah,0dh,"2-Login $"
-    extaccmsg db 0ah,0dh,"3-Exit $"
-    soption db 0ah,0dh,"Please select an option (1 to 3) note that only 1 and 3 work others not done yet: $"
-    ;-------------------------------------------------------------------------------
-.code
-main proc
+entermoney:
     
-     mov ax,@data
-     mov ds,ax
-        
-                  
-mov balancemoney, 0  ; balance money is always initally zero
+    mov money, 0 ;money is the variable that we scan deposit / withraw in 
+    mov ah,09h ; dos function 09h to print a string
+    mov dx,offset entermoneymessage    ; memory location of message "enter money: "
+    int 21h    ; dos interrupt 21h
+scan_money:
+    cmp money , 50000
+    ja morefullmoney
+    cmp money,50000
+    je numberdone
+    mov ah,1  ; dos function to read a character with echo from keyboard
+    int 21h   ; dos interrupt 21h
+    mov bl,al ; save scanned input in temporary variable
+    cmp al,0dh ; check if user pressed enter and didn't enter any money yet
+    je checkemptynumber
+
+    mov al,bl  ; return scanned input in temporary variable
+    cmp al,30h  ; check if input character is less then 1, 
+                ; here we are validating user input to check if entered character is betwen 0 and 9 both included
+    jl invalidcharacter ; jump to display invalid character
+ 
+    
+    cmp al,39h  ; check if input character is great then 9
+    jg invalidcharacter ; jump to display invalid option
+    
+    
+    mov bl, al ; save scanned input in temporary variable and subtracting 30 to get numeric value
+    mov bh,00h
+    sub bx, 30h
+    
+    mov ax,money ; puting old value of money in ax and multiplying it by 10 to move whole number one digit to left
+    mul numberplace ; numberplace is 10 
+    mov money,ax ; returning the amount of money to money variable after last addition then adding bx to it   
+    add money,bx ; bx is last scanned digit
+    
+    add bl,30h   ; adding 30h to bl to return to ascii code of input 
+    mov al,bl
+    cmp al,0dh   ; check if enter key is pressed ( number is completed )
+    inc counter
+    cmp counter,5
+    jnl numberdone
+    jne scan_money ; if not ( the last input wasn't enter , loop again to scan another digit
+numberdone:
     mov ah,09h  ; dos function 09h to print a string
-    mov dx,offset dashedline    ; memory location of message "----------------------------------"
+    mov dx,offset newline    ; memory location of message "new line"     
     int 21h     ; dos interrupt 21h
-    mov dx,offset incbankmessage    ; memory location of message "Welcome To the incredibles bank"
-    int 21h     ; dos interrupt 21h
-    mov dx,offset incbankdescription    ; memory location of message "Welcome To the incredibles bank"
-    int 21h     ; dos interrupt 21h
-    
+    mov ax, money  ; we moved money into ax as we later will add/sub money to/from balancemoney and we can't do add/sub variable variable
 
-    mov ah,09h
-    mov dx,offset createaccountmsg
-    int 21h
-    mov ah,09h
-    mov dx,offset loginmsg
-    int 21h
-    mov ah,09h
-    mov dx,offset extaccmsg  
-    int 21h
-    mov ah,09h
-    mov dx,offset soption
-    int 21h
+    cmp number ,1  ; if the input option was 1 or 2 it'll go to depoist or withdraw
+    je depositfunction
     
-
-    mov ah,01h
-    int 21h
-    cmp al,31h
-    je  create
-    cmp al,32h
-    je  login
-    cmp al,33h
-    je  exitfunction
-    cmp al,31h
-    jl  invalid
-    cmp al,31h
-    jg  invalid
+    cmp number ,2 
+    je withdrawfunction
+    jmp main_bank
+checkemptynumber:
+    cmp money, 0 ;check if enter is pressed but money is still 0
+    je  emptynumber
+    jmp numberdone ; if not empty then return to continue 
     
-create:
-    lea dx,msgun
-        mov ah,09h
-        int 21h
-        
-        mov si,0
-        mov cx,0        
+emptynumber:
+    mov ah,09h
+    mov dx,offset zeromoney    ; memory location of message "Youdidn't enter money yet"
+    int 21h
+    mov dx,offset newline    ; memory location of message "new line"
+    int 21h
+    jmp entermoney
