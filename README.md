@@ -23,6 +23,7 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
 
    Function that logs out of a user account so we may login to another user
 5. Exit:
+
    Function that handles the safe exit of the program
 
 # Programflow
