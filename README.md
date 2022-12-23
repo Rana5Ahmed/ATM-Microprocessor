@@ -28,10 +28,15 @@ Since it is an ATM Machine. Initially we declared some existing accounts . And d
  
  ### Deposit
  In this function we will face 3 Cases:
-   1. Deposit all money in account at once time (Deposit 50.000$ in one operation)
+   1. Deposit all money in account at once time (Deposit 50.000$ in one operation):
+   Then the balance money equals to 50.000$ and the user recives a massage congraulate him of reaching 50K  
    2. Deposit money over the required money in card (Deposit over 50.000$)
+   Then the user get a massage that "The limit of card is 50.000$ only " 
    3. Deposit money within the limit of required money in card(money<50.000$)
- Then we have to check the balance money       
+ Then we have to check the balance money:
+ 
+    1. if the balance reached the maximum limit--> (Congraulate massage)
+    2. balance > limit (Overflow)--> "The limit of card is 50.000$ only "
  
    ![WhatsApp Image 2022-12-23 at 7 10 05 PM](https://user-images.githubusercontent.com/82416493/209380660-4530adf2-b506-4254-9cf1-38660e85ff28.jpeg)
    
