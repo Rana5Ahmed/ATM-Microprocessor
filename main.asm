@@ -557,29 +557,7 @@ save_user1:
         mov cl,0
         int 21h
         mov fhandle,ax
-    
-    ;open file
-        mov ah,3dh
-        lea dx,user1file
-        mov al,2
-        int 21h
-        mov fhandle,ax
-    
-    ;write to file
-        mov cx,3 
-        mov ah,40h
-        mov bx,fhandle
-        lea dx,balancemoney
-        int 21h
-        
-        ;Close a file
-        mov ah,3eh
-        mov bx,fhandle
-        int 21h
-        cmp number,4
-        je  cont_logout
-        jmp ext
-
+        jmp  save_users
 save_user2:
     ;create a new file 
         mov ah,3ch
@@ -587,29 +565,7 @@ save_user2:
         mov cl,0
         int 21h
         mov fhandle,ax
-    
-    ;open file
-        mov ah,3dh
-        lea dx,user2file
-        mov al,2
-        int 21h
-        mov fhandle,ax
-    
-    ;write to file
-        mov cx,3 
-        mov ah,40h
-        mov bx,fhandle
-        lea dx,balancemoney
-        int 21h
-        
-        ;Close a file
-        mov ah,3eh
-        mov bx,fhandle
-        int 21h
-        cmp number,4
-        je  cont_logout
-        jmp ext
-
+        jmp  save_users
 save_user3:
     ;create a new file 
         mov ah,3ch
@@ -617,13 +573,9 @@ save_user3:
         mov cl,0
         int 21h
         mov fhandle,ax
+        jmp  save_users                
     
-    ;open file
-        mov ah,3dh
-        lea dx,user3file
-        mov al,2
-        int 21h
-        mov fhandle,ax
+save_users:
     
     ;write to file
         mov cx,3 
