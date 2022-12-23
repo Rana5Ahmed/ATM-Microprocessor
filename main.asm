@@ -1,21 +1,22 @@
- .model ATM
+.model ATM
 .stack 100h
-
 .data
     numberplace dw 10
-    number dw 0
+    number db 0
     money dd 0
     maxmoney dd 50000
     balancemoney dd 0
     counter db 0
     ;----------------------------------------------Messages----------------------------------------------------
     invalidoption db 0ah,0dh,"Invalid Option$"
-    inputnumber db 0ah,0dh,"Please select an option (1 to 3): $"
+    inputnumber db 0ah,0dh,"Please select an option (1 to 5): $"
     incbankmessage db 0ah,0dh,"Welcome To the incredibles bank $"
     incbankdescription db 0ah,0dh,"The incredibles bank is bank for student which you can deposit to 50,000$"
     depositmessage db 0ah,0dh,"1.Deposit $"
     withdrawmessage db 0ah,0dh,"2.Withdraw $"
-    extmessage db 0ah,0dh,"3.Exit $"
+    balancemessage db 0ah,0dh,"3.Balance Inquiry $"
+    logoutmsg db 0ah,0dh,"4.Log out $ "
+    extmessage db 0ah,0dh,"5.Exit $"
     temp db 0ah,0dh,"Function done $"
     newline db 0ah,0dh,"$"
     goodbye db 0ah,0dh,"It was our pleasure to serve you $"
@@ -29,6 +30,9 @@
     msgpw2 db 0ah,0dh,'Confirm ID: $'
     mgspw3 db 0ah,0dh,'invalid ID $'
     wrong_username_pwmsg db 0ah,0dh,"Sorry, Wrong ID $"
+    currentbalancemsg db ,"Your current balance is : $"
+    sdashedline db 0ah,0dh,"--------------------------------$"
+
     ;----------------------------------------------End Messages-----------------------------------------------------
     buffer db 100 dup<'$'>
     bufferpw db 100 dup<'$'>
@@ -46,32 +50,28 @@
 
     ;-------------------------------------------------------------------------------
     ;------------------------user 1 ----------------------- 
-     user1msg db  "Welcome, [EZZAT] $"
+     user1msg db 0ah,0dh, "Welcome, [EZZAT] $"
      pass1 dw 1234
      user1file db  "ezzat.txt",0
-     fhandle1 dw ?
      ;balance1 dd  250
     ;---------------------End user 1 ----------------------
     
     
     ;------------------------user 2 ----------------------- 
-     user2msg db  "Welcome, [RANEEM] $"
+     user2msg db  0ah,0dh, "Welcome, [RANEEM] $"
      pass2 dw 5555
-     user2file db  "raneem.txt",0
-     fhandle2 dw ? 
+     user2file db  "raneem.txt",0 
      ;balance2 dd  13 
      ;---------------------End user 2 ----------------------
     
     
     ;------------------------user 3 -----------------------
-     user3msg db  "Welcome, [TAREK] $"
-     pass3 dw 6789
+     user3msg db  0ah,0dh, "Welcome, [TAREK] $"
+     pass3 dw 0000
      user3file db  "tarek.txt",0
-     fhandle3 dw ?
      ;balance3 dd  1234
     ;---------------------End user 3 ----------------------   
     current_user db 0
-    
 .code
 main proc
     
